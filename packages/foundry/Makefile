@@ -1,13 +1,18 @@
-PHONY: build deploy deploy-and-generate-abis generate-abis get-address account chain fork compile flatten format lint test verify
+.PHONY: build deploy deploy-and-generate-abis generate-abis get-address account chain fork compile flatten format lint test verify
 
 DEPLOY_SCRIPT ?= script/Deploy.s.sol
+FOUNDRY_DIR := $(abspath $(dir $(lastword $(MAKEFILE_LIST))))
+
+include script/axelar/bridge-axelar.mk
+include script/ccip/bridge-ccip.mk
+include script/layerzero/bridge-layerzero.mk
 
 # Start a plain local Anvil chain (no fork)
 chain:
 	anvil
 
 fork:
-	@FORK_URL=$${FORK_URL:-$${HEDERA_RPC_URL:-https://testnet.hashio.io/api}}; \
+	@FORK_URL=$${FORK_URL:-hedera_testnet}; \
 	echo "Starting Anvil fork against $$FORK_URL with chain-id 296..."; \
 	anvil --fork-url $$FORK_URL --chain-id 296
 

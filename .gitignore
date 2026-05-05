@@ -15,6 +15,10 @@ node_modules
 # misc
 .DS_Store
 
+# Axelar ITS
+packages/foundry/script/axelar/.salt
+packages/foundry/script/axelar/.tokenid
+
 # IDE
 .vscode
 .idea
